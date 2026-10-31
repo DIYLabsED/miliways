@@ -19,7 +19,21 @@
 
 #define GCC_ENABLE_ALL_WARNINGS_AND_WHINE_ABOUT_THEM "-Wall", "-Wextra", "-Wpedantic", "-Werror"
 bool enable_warnings = true;
+/*	WEIRD HACK SHENANIGAN ALERT:
+	The reason I have to do this ugly enable_warnings hack is because my local version
+	of GCC doesn't warn about things like void in function declarations without prototypes
+	or passing strings via %s rather than the string itself, where as the version the GH
+	runner installs *does*. I'm sleepy, and will deal with this nonsense later.
 
+	Anyway, the GH runner passes the --release flag to nob, which quietens GCC-chan.
+	GCC-chan has a lot to say, and important things too, but I want to get multiplatform
+	builds working, rather than perfectly-spec-compliant-to-the-last-degree code.
+	My local, less pedantic version of GCC warns about the major things, anyway.
+	
+	Note: if I can't get my local GCC-chan to be less subdued about warnings, a better thing
+	to do would be to not pass -Werror if --release is passed to nob, so GCC-chan can whine
+	all she likes, I can fix the problems, and the builds still compile.
+*/
 
 static Nob_File_Paths *scanDA = NULL;
 static bool walk_callback(Nob_Walk_Entry entry){
