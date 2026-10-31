@@ -1,8 +1,10 @@
 #include <stdio.h>
 
+#include "shared/constants.h"
+
 int main(){
 
-	printf("Hello, Client!");
+	printf(DANGERS_WARNING);
 	return 0;
 
 }

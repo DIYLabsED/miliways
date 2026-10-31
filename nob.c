@@ -1,9 +1,9 @@
 #define NOB_IMPLEMENTATION
 #include "nob.h"
 
-#define BUILD_DIR 				"build/"
-#define CL_BUILD_SUBDIR 		"client/"
-#define SV_BUILD_SUBDIR 		"server/"
+#define BUILD_DIR 			"build/"
+#define CL_BUILD_SUBDIR 	"client/"
+#define SV_BUILD_SUBDIR 	"server/"
 
 #define SV_EXE_NAME 		"miliways-sv"
 #define CL_EXE_NAME			"miliways-cl"
