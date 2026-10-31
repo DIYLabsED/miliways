@@ -1,3 +1,6 @@
+#include <stdbool.h>
+#include <string.h>
+
 #define NOB_IMPLEMENTATION
 #include "nob.h"
 
@@ -15,6 +18,8 @@
 #define INCLUDE_DIR			"include"
 
 #define GCC_ENABLE_ALL_WARNINGS_AND_WHINE_ABOUT_THEM "-Wall", "-Wextra", "-Wpedantic", "-Werror"
+bool enable_warnings = true;
+
 
 static Nob_File_Paths *scanDA = NULL;
 static bool walk_callback(Nob_Walk_Entry entry){
@@ -30,10 +35,24 @@ static bool walk_callback(Nob_Walk_Entry entry){
 
 }
 
+void handle_args(int argc, char **argv){
+
+	if(argc > 1){
+		for(int i = 0; i < argc; i++){
+			if(strcmp(argv[i], "--release") == 0){
+				enable_warnings = false;
+			}
+		}
+	}
+
+}
+
 int main(int argc, char **argv){
 
 	// Rebuild nob if needed
 	NOB_GO_REBUILD_URSELF(argc, argv);
+
+	handle_args(argc, argv);
 
 	// Ensure build dirs exist
 	if(!nob_mkdir_if_not_exists(BUILD_DIR)) return 1;
@@ -71,7 +90,8 @@ int main(int argc, char **argv){
 
 	// Build server compile command
 	Nob_Cmd sv_build_cmd = {0};
-	nob_cmd_append(&sv_build_cmd, "gcc", GCC_ENABLE_ALL_WARNINGS_AND_WHINE_ABOUT_THEM, "-O3", "-I" INCLUDE_DIR, "-o" BUILD_DIR SV_BUILD_SUBDIR SV_EXE_NAME);
+	nob_cmd_append(&sv_build_cmd, "gcc", "-O3", "-I" INCLUDE_DIR, "-o" BUILD_DIR SV_BUILD_SUBDIR SV_EXE_NAME);
+	if(enable_warnings) nob_cmd_append(&sv_build_cmd, GCC_ENABLE_ALL_WARNINGS_AND_WHINE_ABOUT_THEM);
 
 	for(size_t i = 0; i < sv_src_files.count; i++){
 		nob_cmd_append(&sv_build_cmd, sv_src_files.items[i]);
@@ -83,7 +103,8 @@ int main(int argc, char **argv){
 
 	// Build client compile command
 	Nob_Cmd cl_build_cmd = {0};
-	nob_cmd_append(&cl_build_cmd, "gcc", GCC_ENABLE_ALL_WARNINGS_AND_WHINE_ABOUT_THEM, "-O3", "-I" INCLUDE_DIR, "-o" BUILD_DIR CL_BUILD_SUBDIR CL_EXE_NAME);
+	nob_cmd_append(&cl_build_cmd, "gcc", "-O3", "-I" INCLUDE_DIR, "-o" BUILD_DIR CL_BUILD_SUBDIR CL_EXE_NAME);
+	if(enable_warnings) nob_cmd_append(&cl_build_cmd, GCC_ENABLE_ALL_WARNINGS_AND_WHINE_ABOUT_THEM);
 	
 	for(size_t i = 0; i < cl_src_files.count; i++){
 		nob_cmd_append(&cl_build_cmd, cl_src_files.items[i]);

@@ -27,22 +27,32 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-        sudo apt-get install -y libenet-dev libraylib-dev build-essential
+        sudo apt-get install -y libenet-dev build-essential cmake libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev xorg-dev
+        git clone --depth 1 https://github.com/raysan5/raylib.git /tmp/raylib
+        cd /tmp/raylib/src
+        make PLATFORM=PLATFORM_DESKTOP RAYLIB_LIBTYPE=SHARED
+        sudo make install
 
     - name: Install deps (macos)
       if: runner.os == 'MacOS'
       run: |
         brew install enet raylib
 
-    - name: Install deps (win)
+    - name: Setup MSYS2 (win)
       if: runner.os == 'Windows'
       uses: msys2/setup-msys2@v2
       with:
         msys2-location: C:\msys64
         update: true
-        install: >-
-          mingw-w64-x86_64-toolchain
-          mingw-w64-x86_64-enet
+        msystem: MINGW64
+
+    - name: Install deps (win)
+      if: runner.os == 'Windows'
+      shell: msys2 {0}
+      run: |
+        pacman -S --noconfirm --needed \
+          mingw-w64-x86_64-toolchain \
+          mingw-w64-x86_64-enet \
           mingw-w64-x86_64-raylib
 
     - name: Build (linux/macos)
@@ -50,14 +60,14 @@ jobs:
       shell: bash
       run: |
         cc nob.c -o nob
-        ./nob
+        ./nob --release
 
     - name: Build (win)
       if: runner.os == 'Windows'
       shell: msys2 {0}
       run: |
         gcc nob.c -o nob.exe
-        ./nob.exe
+        ./nob.exe --release
 
     - name: Upload client
       uses: actions/upload-artifact@v4
