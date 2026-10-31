@@ -2,7 +2,7 @@
 
 #include "shared/constants.h"
 
-int main(){
+int main(void){
 
 	printf(DANGERS_WARNING);
 	return 0;
