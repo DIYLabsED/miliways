@@ -50,11 +50,11 @@ jobs:
       if: runner.os == 'Windows'
       shell: msys2 {0}
       run: |
-        pacman -Sy --noconfirm
+        pacman -Syu --noconfirm
         pacman -S --noconfirm --needed \
-          mingw-w64-x86_64-toolchain \
-          mingw-w64-x86_64-enet \
-          mingw-w64-x86_64-raylib
+          mingw-w64-ucrt-x86_64-toolchain \
+          mingw-w64-ucrt-x86_64-enet \
+          mingw-w64-ucrt-x86_64-raylib
 
     - name: Build (linux/macos)
       if: runner.os != 'Windows'
