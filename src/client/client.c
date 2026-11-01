@@ -1,10 +1,11 @@
 #include <stdio.h>
 
-#include "shared/constants.h"
+#include "shared/loc.h"
 
 int main(void){
 
-	printf(DANGERS_WARNING);
+	printf(MW_LOC_SECURITY_WARNING);
+	printf(MW_LOC_LICENSE_AND_CREDITS);
 	return 0;
 
 }
