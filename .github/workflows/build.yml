@@ -30,7 +30,7 @@ jobs:
         sudo apt-get install -y libenet-dev build-essential cmake libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev xorg-dev
         git clone --depth 1 https://github.com/raysan5/raylib.git /tmp/raylib
         cd /tmp/raylib/src
-        make PLATFORM=PLATFORM_DESKTOP RAYLIB_LIBTYPE=SHARED
+        make PLATFORM=PLATFORM_DESKTOP RAYLIB_LIBTYPE=STATIC
         sudo make install
 
     - name: Install deps (macos)
@@ -50,6 +50,7 @@ jobs:
       if: runner.os == 'Windows'
       shell: msys2 {0}
       run: |
+        pacman -Sy --noconfirm
         pacman -S --noconfirm --needed \
           mingw-w64-x86_64-toolchain \
           mingw-w64-x86_64-enet \

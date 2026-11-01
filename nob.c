@@ -22,7 +22,7 @@ bool enable_warnings = true;
 /*	WEIRD HACK SHENANIGAN ALERT:
 	The reason I have to do this ugly enable_warnings hack is because my local version
 	of GCC doesn't warn about things like void in function declarations without prototypes
-	or passing strings via %s rather than the string itself, where as the version the GH
+	or passing strings via %s rather than the string itself, whereas the version the GH
 	runner installs *does*. I'm sleepy, and will deal with this nonsense later.
 
 	Anyway, the GH runner passes the --release flag to nob, which quietens GCC-chan.
