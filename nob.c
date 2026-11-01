@@ -115,6 +115,10 @@ int main(int argc, char **argv){
 		nob_cmd_append(&sv_build_cmd, shared_src_files.items[i]);
 	}	
 
+	#if defined(__APPLE__)
+        nob_cmd_append(&sv_build_cmd, "-I/opt/homebrew/include", "-L/opt/homebrew/lib");
+    #endif
+
 	nob_cmd_append(&sv_build_cmd, "-lenet");
 
 	#if defined(_WIN32)
@@ -135,6 +139,10 @@ int main(int argc, char **argv){
 	for(size_t i = 0; i < shared_src_files.count; i++){
 		nob_cmd_append(&cl_build_cmd, shared_src_files.items[i]);
 	}	
+	
+	#if defined(__APPLE__)
+        nob_cmd_append(&cl_build_cmd, "-I/opt/homebrew/include", "-L/opt/homebrew/lib");
+    #endif
 
 	nob_cmd_append(&cl_build_cmd, "-lraylib", "-lenet");
 
