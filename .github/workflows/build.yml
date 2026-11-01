@@ -27,7 +27,7 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-        sudo apt-get install -y libenet-dev build-essential cmake libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev xorg-dev
+        sudo apt-get install -y libenet-dev build-essential cmake libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev xorg-dev libxcursor-dev libxinerama-dev libxext-dev libxfixes-dev libwayland-dev libxkbcommon-dev
         git clone --depth 1 https://github.com/raysan5/raylib.git /tmp/raylib
         cd /tmp/raylib/src
         make PLATFORM=PLATFORM_DESKTOP RAYLIB_LIBTYPE=STATIC
@@ -44,17 +44,10 @@ jobs:
       with:
         msys2-location: C:\msys64
         update: true
-        msystem: MINGW64
-
-    - name: Install deps (win)
-      if: runner.os == 'Windows'
-      shell: msys2 {0}
-      run: |
-        pacman -Syu --noconfirm
-        pacman -S --noconfirm --needed \
-          base-devel \
-          mingw-w64-ucrt-x86_64-toolchain \
-          mingw-w64-ucrt-x86_64-enet \
+        msystem: UCRT64
+        install: >-
+          mingw-w64-ucrt-x86_64-toolchain
+          mingw-w64-ucrt-x86_64-enet
           mingw-w64-ucrt-x86_64-raylib
 
     - name: Build (linux/macos)
