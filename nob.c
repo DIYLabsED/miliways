@@ -4,18 +4,21 @@
 #define NOB_IMPLEMENTATION
 #include "nob.h"
 
-#define BUILD_DIR 			"build/"
-#define CL_BUILD_SUBDIR 	"client/"
-#define SV_BUILD_SUBDIR 	"server/"
+#define BUILD_DIR 				"build/"
+#define CL_BUILD_SUBDIR 		"client/"
+#define SV_BUILD_SUBDIR 		"server/"
 
-#define SV_EXE_NAME 		"miliways-sv"
-#define CL_EXE_NAME			"miliways-cl"
+#define SV_EXE_NAME 			"miliways-sv"
+#define CL_EXE_NAME				"miliways-cl"
 
-#define CL_SRC_DIR 			"src/client"
-#define SV_SRC_DIR 			"src/server"
-#define SHARED_SRC_DIR 		"src/shared"
+#define CL_SRC_DIR 				"src/client"
+#define SV_SRC_DIR 				"src/server"
+#define SHARED_SRC_DIR 			"src/shared"
 
-#define INCLUDE_DIR			"include"
+#define GAME_ASSETS_SRC_DIR		"game-assets/"
+#define GAME_ASSETS_COPY_DIR	BUILD_DIR CL_BUILD_SUBDIR GAME_ASSETS_SRC_DIR
+
+#define INCLUDE_DIR				"include"
 
 #define GCC_ENABLE_ALL_WARNINGS_AND_WHINE_ABOUT_THEM "-Wall", "-Wextra", "-Wpedantic", "-Werror"
 bool enable_warnings = true;
@@ -158,8 +161,10 @@ int main(int argc, char **argv){
 	if(!nob_cmd_run(&sv_build_cmd)) return 1;
 	if(!nob_cmd_run(&cl_build_cmd)) return 1;
 
-	// Note: sv_build_cmd and cl_build_cmd are now reset, doesn't matter but set dont_reset to true to avoid this if needed
+	// Copy game assets to client folder
+	if(!nob_copy_directory_recursively(GAME_ASSETS_SRC_DIR, GAME_ASSETS_COPY_DIR)) return 1;
 
+	// Note: sv_build_cmd and cl_build_cmd are now reset, doesn't matter but set dont_reset to true to avoid this if needed
 	return 0;
 
 }
