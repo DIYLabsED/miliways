@@ -18,10 +18,17 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
 
-    - name: Get commit hash
+    - name: Get commit hash and short OS name
       id: vars
       shell: bash
-      run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      run: |
+        echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        
+          case "${{matrix.os}}" in
+          ubuntu-latest)  echo "os_name=linux" >> $GITHUB_OUTPUT ;;
+          macos-latest)   echo "os_name=macos" >> $GITHUB_OUTPUT ;;
+          windows-latest) echo "os_name=win"   >> $GITHUB_OUTPUT ;;
+        esac
 
     - name: Install deps (linux)
       if: runner.os == 'Linux'
