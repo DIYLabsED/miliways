@@ -52,6 +52,7 @@ jobs:
       run: |
         pacman -Syu --noconfirm
         pacman -S --noconfirm --needed \
+          base-devel \
           mingw-w64-ucrt-x86_64-toolchain \
           mingw-w64-ucrt-x86_64-enet \
           mingw-w64-ucrt-x86_64-raylib
