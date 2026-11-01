@@ -141,7 +141,7 @@ int main(int argc, char **argv){
 	#if defined(_WIN32)
 		nob_cmd_append(&cl_build_cmd, "-lws2_32", "-lwinmm", "-lgdi32");
 	#elif defined(__APPLE__)
-		nob_cmd_append(&cl_build_cmd, "-framework", "OpenGL", "-framework", "Cocoa", "-framework", "IOKit", "-framework", "CoreVideo";
+		nob_cmd_append(&cl_build_cmd, "-framework", "OpenGL", "-framework", "Cocoa", "-framework", "IOKit", "-framework", "CoreVideo");
 	#elif defined(__linux__)
 		nob_cmd_append(&cl_build_cmd, "-lGL", "-lm", "-lpthread", "-ldl", "-lrt", "-lX11");
 	#endif
