@@ -115,6 +115,14 @@ int main(int argc, char **argv){
 		nob_cmd_append(&sv_build_cmd, shared_src_files.items[i]);
 	}	
 
+	nob_cmd_append(&sv_build_cmd, "-lenet");
+
+	#if defined(_WIN32)
+		nob_cmd_append(&sv_build_cmd, "-lws2_32", "-lwinmm");
+	#elif defined(__linux__)
+		nob_cmd_append(&sv_build_cmd, "-lpthread");
+	#endif
+
 	// Build client compile command
 	Nob_Cmd cl_build_cmd = {0};
 	nob_cmd_append(&cl_build_cmd, "gcc", "-O3", "-I" INCLUDE_DIR, "-o" BUILD_DIR CL_BUILD_SUBDIR CL_EXE_NAME);
@@ -127,6 +135,16 @@ int main(int argc, char **argv){
 	for(size_t i = 0; i < shared_src_files.count; i++){
 		nob_cmd_append(&cl_build_cmd, shared_src_files.items[i]);
 	}	
+
+	nob_cmd_append(&cl_build_cmd, "-lraylib", "-lenet");
+
+	#if defined(_WIN32)
+		nob_cmd_append(&cl_build_cmd, "-lws2_32", "-lwinmm", "-lgdi32");
+	#elif defined(__APPLE__)
+		nob_cmd_append(&cl_build_cmd, "-framework", "OpenGL", "-framework", "Cocoa", "-framework", "IOKit", "-framework", "CoreVideo";
+	#elif defined(__linux__)
+		nob_cmd_append(&cl_build_cmd, "-lGL", "-lm", "-lpthread", "-ldl", "-lrt", "-lX11");
+	#endif
 
 	// Compile!
 	if(!nob_cmd_run(&sv_build_cmd)) return 1;
