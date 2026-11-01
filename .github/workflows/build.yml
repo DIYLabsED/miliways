@@ -74,11 +74,11 @@ jobs:
     - name: Upload client
       uses: actions/upload-artifact@v4
       with:
-        name: miliways-client-${{matrix.os}}-${{steps.vars.outputs.sha_short}}
+        name: miliways-client-${{steps.vars.outputs.os_name}}-${{steps.vars.outputs.sha_short}}
         path: build/client
 
     - name: Upload server
       uses: actions/upload-artifact@v4
       with:
-        name: miliways-server-${{matrix.os}}-${{steps.vars.outputs.sha_short}}
+        name: miliways-server-${{steps.vars.outputs.os_name}}-${{steps.vars.outputs.sha_short}}
         path: build/server
