@@ -4,19 +4,20 @@
 #define NOB_IMPLEMENTATION
 #include "nob.h"
 
-#define BUILD_DIR 				"build/"
-#define CL_BUILD_SUBDIR 		"client/"
-#define SV_BUILD_SUBDIR 		"server/"
+#define BUILD_DIR 					"build/"
+#define CL_BUILD_SUBDIR 			"client/"
+#define SV_BUILD_SUBDIR 			"server/"
 
-#define SV_EXE_NAME 			"miliways-sv"
-#define CL_EXE_NAME				"miliways-cl"
+#define SV_EXE_NAME 				"miliways-sv"
+#define CL_EXE_NAME					"miliways-cl"
 
-#define CL_SRC_DIR 				"src/client"
-#define SV_SRC_DIR 				"src/server"
-#define SHARED_SRC_DIR 			"src/shared"
+#define CL_SRC_DIR 					"src/client"
+#define SV_SRC_DIR 					"src/server"
+#define SHARED_SRC_DIR 				"src/shared"
 
-#define GAME_ASSETS_SRC_DIR		"game-assets/"
-#define GAME_ASSETS_COPY_DIR	BUILD_DIR CL_BUILD_SUBDIR GAME_ASSETS_SRC_DIR
+#define GAME_ASSETS_SRC_DIR			"game-assets/"
+#define GAME_ASSETS_CL_COPY_DIR		BUILD_DIR CL_BUILD_SUBDIR GAME_ASSETS_SRC_DIR
+#define GAME_ASSETS_SV_COPY_DIR		BUILD_DIR SV_BUILD_SUBDIR GAME_ASSETS_SRC_DIR
 
 #define INCLUDE_DIR				"include"
 
@@ -124,11 +125,16 @@ int main(int argc, char **argv){
 
 	nob_cmd_append(&sv_build_cmd, "-lenet");
 
+	nob_cmd_append(&sv_build_cmd, "-lraylib", "-lenet");
+
 	#if defined(_WIN32)
-		nob_cmd_append(&sv_build_cmd, "-lws2_32", "-lwinmm");
+		nob_cmd_append(&sv_build_cmd, "-lws2_32", "-lwinmm", "-lgdi32");
+	#elif defined(__APPLE__)
+		nob_cmd_append(&sv_build_cmd, "-framework", "OpenGL", "-framework", "Cocoa", "-framework", "IOKit", "-framework", "CoreVideo");
 	#elif defined(__linux__)
-		nob_cmd_append(&sv_build_cmd, "-lpthread");
+		nob_cmd_append(&sv_build_cmd, "-lGL", "-lm", "-lpthread", "-ldl", "-lrt", "-lX11");
 	#endif
+
 
 	// Build client compile command
 	Nob_Cmd cl_build_cmd = {0};
@@ -161,8 +167,9 @@ int main(int argc, char **argv){
 	if(!nob_cmd_run(&sv_build_cmd)) return 1;
 	if(!nob_cmd_run(&cl_build_cmd)) return 1;
 
-	// Copy game assets to client folder
-	if(!nob_copy_directory_recursively(GAME_ASSETS_SRC_DIR, GAME_ASSETS_COPY_DIR)) return 1;
+	// Copy game assets to build folders
+	if(!nob_copy_directory_recursively(GAME_ASSETS_SRC_DIR, GAME_ASSETS_CL_COPY_DIR)) return 1;
+	if(!nob_copy_directory_recursively(GAME_ASSETS_SRC_DIR, GAME_ASSETS_SV_COPY_DIR)) return 1;
 
 	// Note: sv_build_cmd and cl_build_cmd are now reset, doesn't matter but set dont_reset to true to avoid this if needed
 	return 0;
