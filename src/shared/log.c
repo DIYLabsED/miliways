@@ -1,4 +1,8 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "shared/log.h"
+
 
 char *mw_get_str_from_log_level(enum mw_log_level lvl){
 
@@ -25,10 +29,11 @@ char *mw_get_str_from_log_level(enum mw_log_level lvl){
 
 }
 
-void mw_log(enum mw_log_level lvl, char *msg, char *file, int line){
+void mw_log(enum mw_log_level lvl, const char *msg, char *file, int line){
 
 	const char *fmt = "[%s] (%s at line %d): %s\n";
 	const char *lvl_c = mw_get_str_from_log_level(lvl);
+	
 	int size = snprintf(NULL, 0, fmt, lvl_c, file, line, msg);
 	char *log = malloc(size + 1);
 	sprintf(log, fmt, lvl_c, file, line, msg);

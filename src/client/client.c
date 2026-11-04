@@ -7,12 +7,9 @@
 
 int main(void){
 
-	printf(MW_LOC_SECURITY_WARNING);
-	printf(MW_LOC_LICENSE_AND_CREDITS);
+	MW_LOG(MW_LOG_WARNING, MW_LOC_SECURITY_WARNING);
+	MW_LOG(MW_LOG_INFO, MW_LOC_LICENSE_AND_CREDITS);
 	
-	MW_LOG(MW_LOG_INFO, "hello, world!");
-	MW_LOG(MW_LOG_ERROR, "hello, world!");
-
 	return 0;
 
 }

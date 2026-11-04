@@ -8,9 +8,6 @@
 
 #pragma once
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #define MW_LOG(lvl, msg) mw_log(lvl, msg, __FILE__, __LINE__);
 
 enum mw_log_level{
@@ -21,4 +18,4 @@ enum mw_log_level{
 };
 
 char *mw_get_str_from_log_level(enum mw_log_level lvl);
-void mw_log(enum mw_log_level lvl, char *msg, char *file, int line);
+void mw_log(enum mw_log_level lvl, const char *msg, char *file, int line);
