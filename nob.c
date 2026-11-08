@@ -22,22 +22,7 @@
 #define INCLUDE_DIR				"include"
 
 #define GCC_ENABLE_ALL_WARNINGS_AND_WHINE_ABOUT_THEM "-Wall", "-Wextra", "-Wpedantic", "-Werror"
-bool enable_warnings = true;
-/*	WEIRD HACK SHENANIGAN ALERT:
-	The reason I have to do this ugly enable_warnings hack is because my local version
-	of GCC doesn't warn about things like void in function declarations without prototypes
-	or passing strings via %s rather than the string itself, whereas the version the GH
-	runner installs *does*. I'm sleepy, and will deal with this nonsense later.
-
-	Anyway, the GH runner passes the --release flag to nob, which quietens GCC-chan.
-	GCC-chan has a lot to say, and important things too, but I want to get multiplatform
-	builds working, rather than perfectly-spec-compliant-to-the-last-degree code.
-	My local, less pedantic version of GCC warns about the major things, anyway.
-	
-	Note: if I can't get my local GCC-chan to be less subdued about warnings, a better thing
-	to do would be to not pass -Werror if --release is passed to nob, so GCC-chan can whine
-	all she likes, I can fix the problems, and the builds still compile.
-*/
+bool release_mode = false;
 
 static Nob_File_Paths *scanDA = NULL;
 static bool walk_callback(Nob_Walk_Entry entry){
@@ -58,7 +43,7 @@ void handle_args(int argc, char **argv){
 	if(argc > 1){
 		for(int i = 0; i < argc; i++){
 			if(strcmp(argv[i], "--release") == 0){
-				enable_warnings = false;
+				release_mode = true;
 			}
 		}
 	}
@@ -109,7 +94,7 @@ int main(int argc, char **argv){
 	// Build server compile command
 	Nob_Cmd sv_build_cmd = {0};
 	nob_cmd_append(&sv_build_cmd, "gcc", "-O3", "-I" INCLUDE_DIR, "-o" BUILD_DIR SV_BUILD_SUBDIR SV_EXE_NAME);
-	if(enable_warnings) nob_cmd_append(&sv_build_cmd, GCC_ENABLE_ALL_WARNINGS_AND_WHINE_ABOUT_THEM);
+	if(!release_mode) nob_cmd_append(&sv_build_cmd, GCC_ENABLE_ALL_WARNINGS_AND_WHINE_ABOUT_THEM);
 
 	for(size_t i = 0; i < sv_src_files.count; i++){
 		nob_cmd_append(&sv_build_cmd, sv_src_files.items[i]);
@@ -139,7 +124,7 @@ int main(int argc, char **argv){
 	// Build client compile command
 	Nob_Cmd cl_build_cmd = {0};
 	nob_cmd_append(&cl_build_cmd, "gcc", "-O3", "-I" INCLUDE_DIR, "-o" BUILD_DIR CL_BUILD_SUBDIR CL_EXE_NAME);
-	if(enable_warnings) nob_cmd_append(&cl_build_cmd, GCC_ENABLE_ALL_WARNINGS_AND_WHINE_ABOUT_THEM);
+	if(!release_mode) nob_cmd_append(&cl_build_cmd, GCC_ENABLE_ALL_WARNINGS_AND_WHINE_ABOUT_THEM);
 	
 	for(size_t i = 0; i < cl_src_files.count; i++){
 		nob_cmd_append(&cl_build_cmd, cl_src_files.items[i]);
@@ -164,7 +149,9 @@ int main(int argc, char **argv){
 	#endif
 
 	// Compile!
+	nob_log(NOB_INFO, "Running server build command");
 	if(!nob_cmd_run(&sv_build_cmd)) return 1;
+	nob_log(NOB_INFO, "Running client build command");
 	if(!nob_cmd_run(&cl_build_cmd)) return 1;
 
 	// Copy game assets to build folders

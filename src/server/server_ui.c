@@ -1,5 +1,5 @@
 #include <raylib.h>
-#include <raygui.h>
+#include "shared/raygui.h"
 
 #include <shared/log.h>
 #include <shared/loc.h>
