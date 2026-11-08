@@ -10,6 +10,14 @@
 
 #define MW_LOG(lvl, msg) mw_log(lvl, msg, __FILE__, __LINE__);
 
+#define MW_ANSI_CC_RED			"\x1b[31m"
+#define MW_ANSI_CC_GREEN		"\x1b[32m"
+#define MW_ANSI_CC_YELLOW		"\x1b[33m"
+#define MW_ANSI_CC_BLUE			"\x1b[34m"
+#define MW_ANSI_CC_MAGENTA		"\x1b[35m"
+#define MW_ANSI_CC_CYAN			"\x1b[36m"
+#define MW_ANSI_CC_RESET		"\x1b[0m"
+
 enum mw_log_level{
 	MW_LOG_INFO,
 	MW_LOG_WARNING,
@@ -18,4 +26,5 @@ enum mw_log_level{
 };
 
 char *mw_get_str_from_log_level(enum mw_log_level lvl);
+char *mw_get_ansi_color_from_log_level(enum mw_log_level lv);
 void mw_log(enum mw_log_level lvl, const char *msg, char *file, int line);
