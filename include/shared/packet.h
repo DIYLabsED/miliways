@@ -2,16 +2,17 @@
 	This file is licensed under the MIT license. See LICENSE in the root of this repo for the license text.
 
 	include/shared/packet.h
-	SHared packet-related stuff
+	Shared packet-related stuff
 
 */ 
 
 #pragma once
 
-#include <enet/types.h>
 #include <stdint.h>
 #include <stdbool.h>
+
 #include <enet/enet.h>
+#include <enet/types.h>
 
 
 typedef enum{
@@ -39,6 +40,6 @@ typedef struct{
 
 // structs for payloads
 
-bool mw_send_packet(ENetPeer *peer, mw_packet *pkt, enet_uint32 flags);
-bool mv_recv_pachet(ENetPacket *enetPkt, mw_packet *mwPkt);
+bool mw_send_packet(ENetPeer *peer, mw_packet *pkt, enet_uint32 flags, enet_uint8 chan);
+bool mw_recv_packet(ENetPacket *enet_pkt, mw_packet *mw_pkt);
 void mw_free_packet(mw_packet *pkt);
