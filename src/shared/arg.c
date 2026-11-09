@@ -52,7 +52,7 @@ bool mw_arg_get_bool(int argc, char **argv, char *arg, bool fb){
 
 }
 
-char *mw_get_str(int argc, char **argv, char *arg, char *fb){
+char *mw_arg_get_str(int argc, char **argv, char *arg, char *fb){
 
 	int idx = mw_arg_exists(argc, argv, arg);
 	if(idx == -1 || idx + 1 >= argc) return fb;

@@ -14,14 +14,15 @@
 #include <enet/enet.h>
 #include <enet/types.h>
 
-
+// Packet types
 typedef enum{
 
 	MW_PACKET_NONE,
-	MW_PACKET_PLAYER_INPUT
+	MW_PACKET_ECHO,
 
 } mw_packet_type;
 
+// Packet header
 #pragma pack(push, 1)
 typedef struct{
 
@@ -31,6 +32,7 @@ typedef struct{
 } mw_packet_header;
 #pragma pack(pop)
 
+// Packet
 typedef struct{
 
 	mw_packet_header header;
@@ -38,7 +40,13 @@ typedef struct{
 
 } mw_packet;
 
-// structs for payloads
+
+// Payloads
+typedef struct{
+
+	char *msg;
+
+} mw_payload_echo;
 
 bool mw_send_packet(ENetPeer *peer, mw_packet *pkt, enet_uint32 flags, enet_uint8 chan);
 bool mw_recv_packet(ENetPacket *enet_pkt, mw_packet *mw_pkt);

@@ -14,4 +14,4 @@ int 		mw_arg_exists(int argc, char **argv, char *arg);
 long long 	mw_arg_get_ll(int argc, char **argv, char *arg, long long fb);
 double 		mw_arg_get_d(int argc, char **argv, char *arg, double fb);
 bool 		mw_arg_get_bool(int argc, char **argv, char *arg, bool fb);
-char *		mw_get_str(int argc, char **argv, char *arg, char *fb);
+char *		mw_arg_get_str(int argc, char **argv, char *arg, char *fb);
