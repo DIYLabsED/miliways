@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include <stdint.h>
 #include <enet/enet.h>
 
 typedef struct{
