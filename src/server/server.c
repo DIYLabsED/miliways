@@ -7,20 +7,14 @@
 #include "shared/loc.h"
 #include "shared/log.h"
 #include "shared/arg.h"
-#include "server/server_config.h"
 #include "shared/reslist.h"
 
 
-mw_server_cfg   g_server_config;
-mw_server_state g_server_state 		= MW_SERVER_READ_ARGS;
-bool 			g_server_running 	= true;
 ENetHost 		*g_enet_server;
 ENetAddress 	g_server_address;
 
-
-void read_args(int argc, char **argv);
-void setup_enet();
-void cleanup();
+mw_server_state_func g_current_state = mw_state_setup;
+bool g_server_running = true;
 
 
 int main(int argc, char **argv){
@@ -28,36 +22,31 @@ int main(int argc, char **argv){
 	MW_LOG(MW_LOG_WARNING, MW_LOC_SECURITY_WARNING);
 	MW_LOG(MW_LOG_INFO, MW_LOC_LICENSE_AND_CREDITS);
 
+	MW_LOG(MW_LOG_INFO, "Entering server loop");
+
 	while(g_server_running){
 
-		switch(g_server_state){
+		if(g_current_state == NULL){
 
-			case MW_SERVER_READ_ARGS:
-				read_args(argc, argv);
-				g_server_state = MW_SERVER_ENET_SETUP;				
-				break;
+			MW_LOG(MW_LOG_ERROR, "g_current_state is a nullptr! Calling cleanup function");
+			mw_state_cleanup(argc, argv);			
 
-			case MW_SERVER_ENET_SETUP:
-				setup_enet();
-				//g_server_state = MW_WAIT_FOR_CLIENTS;
-				exit(EXIT_SUCCESS);
-				break;
+			MW_LOG(MW_LOG_ERROR, "mw_state_cleanup did not exit! Calling exit()");
+			exit(EXIT_FAILURE);
 
-			case MW_SERVER_CLEANUP:
-				cleanup();
-				break;
-
-			default: 
-				break;
-
+		}
+		else{
+			g_current_state(argc, argv);
 		}
 
 	}
 
-	return 0;
+	MW_LOG(MW_LOG_ERROR, "Abnormal server exit");
+	exit(EXIT_FAILURE);
 
 }
 
+/*
 void read_args(int argc, char **argv){
 
 	g_server_config.addr 				= mw_arg_get_str(argc, argv, "--addr", "0");			// 0 for local address
@@ -96,3 +85,4 @@ void cleanup(){
 	enet_host_destroy(g_enet_server);
 
 }
+*/

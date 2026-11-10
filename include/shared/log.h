@@ -16,7 +16,9 @@
 #define MW_ANSI_CC_BLUE			"\x1b[34m"
 #define MW_ANSI_CC_MAGENTA		"\x1b[35m"
 #define MW_ANSI_CC_CYAN			"\x1b[36m"
-#define MW_ANSI_CC_RESET		"\x1b[0m"
+#define MW_ANSI_FM_ITALIC 		"\x1b[3m"
+#define MW_ANSI_RESET		"\x1b[0m"
+
 
 enum mw_log_level{
 	MW_LOG_INFO,

@@ -17,4 +17,4 @@ typedef struct{
 	char *addr;
 	uint16_t port;
 
-} mw_server_cfg;
+} mw_server_global;

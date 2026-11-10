@@ -56,12 +56,12 @@ char *mw_get_ansi_color_from_log_level(enum mw_log_level lvl){
 
 void mw_log(enum mw_log_level lvl, const char *msg, char *file, int line){
 
-	const char *fmt = "[%s%s%s] (%s at line %d): %s\n";
+	const char *fmt = "[%s%s%s] %s(%s at line %d):%s %s\n";
 	const char *lvl_c = mw_get_str_from_log_level(lvl);
 	
-	int size = snprintf(NULL, 0, fmt, mw_get_ansi_color_from_log_level(lvl), lvl_c, MW_ANSI_CC_RESET, file, line, msg);
+	int size = snprintf(NULL, 0, fmt, mw_get_ansi_color_from_log_level(lvl), lvl_c, MW_ANSI_RESET, MW_ANSI_FM_ITALIC, file, line, MW_ANSI_RESET, msg);
 	char *log = malloc(size + 1);
-	sprintf(log, fmt, mw_get_ansi_color_from_log_level(lvl), lvl_c, MW_ANSI_CC_RESET, file, line, msg);
+	sprintf(log, fmt, mw_get_ansi_color_from_log_level(lvl), lvl_c, MW_ANSI_RESET, MW_ANSI_FM_ITALIC, file, line, MW_ANSI_RESET, msg);
 
 	if(lvl == MW_LOG_ERROR){
 		fprintf(stderr, "%s", log);

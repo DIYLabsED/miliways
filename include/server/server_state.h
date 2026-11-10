@@ -8,8 +8,17 @@
 
 #pragma once
 
-typedef enum{
-	MW_SERVER_READ_ARGS,
-	MW_SERVER_ENET_SETUP,
-	MW_SERVER_CLEANUP
-} mw_server_state;
+#include <stdbool.h>
+#include "server/server_config.h"
+
+
+typedef void(*mw_server_state_func)(int argc, char **argv);
+
+void mw_state_setup(int argc, char **argv);
+void mw_state_enet_setup(int argc, char **argv);
+void mw_state_cleanup(int argc, char **argv);
+
+
+extern mw_server_state_func g_current_state;
+extern bool g_server_running;
+extern mw_server_global g_server_global;
