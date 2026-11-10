@@ -9,12 +9,15 @@
 #pragma once
 
 #include <stdint.h>
+#include <stdbool.h>
 #include <enet/enet.h>
 
 typedef struct{
 
-	// ENet library
-	char *addr;
-	uint16_t port;
+	ENetHost 		*enet_server;
+	ENetAddress 	server_address;
+
+	bool create_new_world;
+	char *world_path;
 
 } mw_server_global;

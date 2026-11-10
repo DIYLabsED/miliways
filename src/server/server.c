@@ -3,16 +3,14 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+#include "server/server_config.h"
 #include "server/server_state.h"
 #include "shared/loc.h"
 #include "shared/log.h"
-#include "shared/arg.h"
 #include "shared/reslist.h"
 
 
-ENetHost 		*g_enet_server;
-ENetAddress 	g_server_address;
-
+mw_server_global g_server_global;
 mw_server_state_func g_current_state = mw_state_setup;
 bool g_server_running = true;
 
