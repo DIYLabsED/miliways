@@ -8,7 +8,7 @@
 
 #pragma once
 
-#define MW_LOG(lvl, msg) mw_log(lvl, msg, __FILE__, __LINE__);
+#define MW_LOG(lvl, fmt, ...) mw_log(lvl, __FILE__, __LINE__, fmt, ##__VA_ARGS__);	// ##__VA_ARGS__ handles trailing comma if you call w/ no fmt args
 
 #define MW_ANSI_CC_RED			"\x1b[31m"
 #define MW_ANSI_CC_GREEN		"\x1b[32m"
@@ -29,4 +29,4 @@ enum mw_log_level{
 
 char *mw_get_str_from_log_level(enum mw_log_level lvl);
 char *mw_get_ansi_color_from_log_level(enum mw_log_level lv);
-void mw_log(enum mw_log_level lvl, const char *msg, char *file, int line);
+void mw_log(enum mw_log_level lvl, char *file, int line, const char *fmt, ...);
