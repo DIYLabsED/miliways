@@ -61,7 +61,7 @@ void mw_log(enum mw_log_level lvl, char *file, int line, const char *fmt, ...){
 	va_start(args, fmt);
 
 	va_list args_cpy;
-	va_copy(args_cpy, args);
+	va_copy(args_cpy, args);	
 	int msg_size = vsnprintf(NULL, 0, fmt, args_cpy);
 	va_end(args_cpy);
 
@@ -76,10 +76,10 @@ void mw_log(enum mw_log_level lvl, char *file, int line, const char *fmt, ...){
 
 	int total_size = snprintf(NULL, 0, log_fmt, clr, lvl_str, MW_ANSI_RESET, MW_ANSI_FM_ITALIC, file, line, MW_ANSI_RESET, msg);
 
-	char *log = malloc(total_size + 1);
+	char *log = malloc(total_size + 1);																						
 	sprintf(log, log_fmt, clr, lvl_str, MW_ANSI_RESET, MW_ANSI_FM_ITALIC, file, line, MW_ANSI_RESET, msg);
 
-	if(lvl == MW_LOG_ERROR){
+	if(lvl == MW_LOG_ERROR){	
 		fprintf(stderr, "%s", log);
 	}
 	else{
