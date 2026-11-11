@@ -73,7 +73,7 @@ void mw_state_setup(int argc, char **argv){
 
 	read_enet_args(argc, argv);
 
-	MW_LOG(MW_LOG_INFO, "Server client finished");
+	MW_LOG(MW_LOG_INFO, "Client estup finished");
 	g_current_state = mw_state_cleanup;
 
 }
