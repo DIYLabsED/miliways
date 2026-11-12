@@ -6,6 +6,7 @@
 #include "client/client_state.h"
 #include "shared/log.h"
 #include "shared/arg.h"
+#include "shared/consts.h"
 
 
 void read_enet_args(int argc, char **argv){
@@ -67,13 +68,27 @@ void read_enet_args(int argc, char **argv){
 
 }
 
+void start_enet(){
+
+	g_client_global.enet_client = enet_host_create(NULL, 1, MW_ENET_MAX_CONNECTIONS, 0, 0);
+
+	if(g_client_global.enet_client == NULL){
+		MW_LOG(MW_LOG_ERROR, "Failed to create ENet client!");
+		exit(EXIT_FAILURE);
+	}
+
+	MW_LOG(MW_LOG_INFO, "Created ENet client");
+
+}
+
 void mw_state_setup(int argc, char **argv){
 
 	MW_LOG(MW_LOG_INFO, "Starting client setup");
 
 	read_enet_args(argc, argv);
+	start_enet();
 
-	MW_LOG(MW_LOG_INFO, "Client estup finished");
+	MW_LOG(MW_LOG_INFO, "Client setup finished");
 	g_current_state = mw_state_cleanup;
 
 }

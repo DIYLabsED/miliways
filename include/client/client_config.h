@@ -19,6 +19,7 @@ typedef struct{
 
 	ENetHost 		*enet_client;
 	ENetAddress 	server_address;
+	ENetPeer 		*enet_peer;
 
 	int playing_as;
 

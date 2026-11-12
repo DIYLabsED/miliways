@@ -4,6 +4,7 @@
 #include "server/server_state.h"
 #include "shared/log.h"
 #include "shared/arg.h"
+#include "shared/consts.h"
 
 
 void read_enet_args(int argc, char **argv){
@@ -44,7 +45,7 @@ void start_enet_server(){
 
 	g_server_global.enet_server = enet_host_create(&g_server_global.server_address,		// Addr
 												   2,									// Number of clients
-												   2,									// Number of channels
+												   MW_ENET_MAX_CONNECTIONS,				// Number of channels
 												   0,									// Incoming bandwidth
 												   0									// Outgoing bandwidth
 	);
