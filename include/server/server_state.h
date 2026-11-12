@@ -16,6 +16,7 @@ typedef void(*mw_server_state_func)(int argc, char **argv);
 
 void mw_state_setup(int argc, char **argv);
 void mw_state_enet_setup(int argc, char **argv);
+void mw_state_await_connections(int argc, char **argv);
 void mw_state_cleanup(int argc, char **argv);
 
 

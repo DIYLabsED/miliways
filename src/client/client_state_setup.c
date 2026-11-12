@@ -89,6 +89,6 @@ void mw_state_setup(int argc, char **argv){
 	start_enet();
 
 	MW_LOG(MW_LOG_INFO, "Client setup finished");
-	g_current_state = mw_state_cleanup;
+	g_current_state = mw_state_connect;
 
 }
