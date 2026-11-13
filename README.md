@@ -23,6 +23,9 @@ Upon a successful build, the server executable will be placed in `/build/server/
 
 ## Running
 
+> [!WARNING]
+> Miliways does not care about security or safety at all. It is not intentionally malicious or expolitable, I just didn't want to worry about network security while writing it. You take full responsibility if you choose to run the client or server.
+
 ### Server
 #### CLI parameters:
 | Name | Type | Default | Description |
