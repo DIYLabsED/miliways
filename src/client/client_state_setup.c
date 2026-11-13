@@ -11,7 +11,7 @@
 
 void read_enet_args(int argc, char **argv){
 
-	if(mw_arg_exists(argc, argv, "--sv-addr") != -1){
+	if(mw_arg_exists(argc, argv, "--addr") != -1){
 
 		char *addr = mw_arg_get_str(argc, argv, "--sv-addr", "FALLBACK");
 		enet_address_set_host(&g_client_global.server_address, addr);
