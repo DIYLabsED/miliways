@@ -13,14 +13,14 @@ void read_enet_args(int argc, char **argv){
 
 	if(mw_arg_exists(argc, argv, "--addr") != -1){
 
-		char *addr = mw_arg_get_str(argc, argv, "--sv-addr", "FALLBACK");
+		char *addr = mw_arg_get_str(argc, argv, "--addr", "FALLBACK");
 		enet_address_set_host(&g_client_global.server_address, addr);
 		MW_LOG(MW_LOG_INFO, "Game server address: %s", addr);
 
 	}
 	else{
 
-		MW_LOG(MW_LOG_ERROR, "No game server address passed! Pass a valid IPV4 address, or hostname, using the --sv-addr flag");
+		MW_LOG(MW_LOG_ERROR, "No game server address passed! Pass a valid IPV4 address, or hostname, using the --addr flag");
 		exit(EXIT_FAILURE);
 
 	}
