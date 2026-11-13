@@ -12,9 +12,6 @@
 #include <stdbool.h>
 #include <enet/enet.h>
 
-#define MW_CLIENT_LILAC 1
-#define MW_CLIENT_CLOVER -1
-
 typedef struct{
 
 	ENetHost 		*enet_client;
@@ -22,5 +19,6 @@ typedef struct{
 	ENetPeer 		*enet_peer;
 
 	int playing_as;
+	bool joined;
 
 } mw_client_global;

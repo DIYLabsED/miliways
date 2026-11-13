@@ -17,6 +17,10 @@ typedef struct{
 	ENetHost 		*enet_server;
 	ENetAddress 	server_address;
 
+	ENetPeer *players[2];
+	int player_characters[2];
+	int player_count;
+
 	bool create_new_world;
 	char *world_path;
 

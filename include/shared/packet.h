@@ -18,7 +18,8 @@
 typedef enum{
 
 	MW_PACKET_NONE,
-	MW_PACKET_ECHO,
+	MW_PACKET_JOIN_REQUEST,
+	MW_PACKET_JOIN_RESULT,
 
 } mw_packet_type;
 
@@ -44,9 +45,24 @@ typedef struct{
 // Payloads
 typedef struct{
 
-	char *msg;
+	int32_t character;
+	
+} mw_payload_join_request;
 
-} mw_payload_echo;
+typedef struct{
+
+	uint8_t accepted;
+	uint8_t reason;
+	uint32_t character;
+
+} mw_payload_join_result;
+
+typedef enum{
+	MW_JOIN_ACCEPTED,
+	MW_JOIN_SERVER_FULL,
+	MW_JOIN_CHARACTER_TAKEN,
+	MW_JOIN_INVALID_CHARACTER
+} mw_join_result;
 
 bool mw_send_packet(ENetPeer *peer, mw_packet *pkt, enet_uint32 flags, enet_uint8 chan);
 bool mw_recv_packet(ENetPacket *enet_pkt, mw_packet *mw_pkt);

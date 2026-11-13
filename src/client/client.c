@@ -17,8 +17,8 @@ bool g_client_running = true;
 
 int main(int argc, char **argv){
 
-	MW_LOG(MW_LOG_WARNING, MW_LOC_SECURITY_WARNING);
-	MW_LOG(MW_LOG_INFO, MW_LOC_LICENSE_AND_CREDITS);
+	//MW_LOG(MW_LOG_WARNING, MW_LOC_SECURITY_WARNING);
+	//MW_LOG(MW_LOG_INFO, MW_LOC_LICENSE_AND_CREDITS);
 
 	MW_LOG(MW_LOG_INFO, "Entering client loop");
 
