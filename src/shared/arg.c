@@ -1,6 +1,7 @@
 #include <string.h>
 #include <strings.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "shared/arg.h"
 
@@ -58,5 +59,21 @@ char *mw_arg_get_str(int argc, char **argv, char *arg, char *fb){
 	if(idx == -1 || idx + 1 >= argc) return fb;
 
 	return argv[idx + 1];
+
+}
+
+bool mw_arg_prompt_n(char *msg){
+
+	printf(msg);
+	int in = getchar();
+
+	if(in == 'n' || in == '\n'){
+		return false;
+	}
+	else if(in == 'y'){
+		return true;
+	}
+
+	return false;
 
 }

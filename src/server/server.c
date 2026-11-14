@@ -7,6 +7,7 @@
 #include "server/server_state.h"
 #include "shared/loc.h"
 #include "shared/log.h"
+#include "shared/arg.h"
 #include "shared/reslist.h"
 
 
@@ -17,8 +18,15 @@ bool g_server_running = true;
 
 int main(int argc, char **argv){
 
-	MW_LOG(MW_LOG_WARNING, MW_LOC_SECURITY_WARNING);
 	MW_LOG(MW_LOG_INFO, MW_LOC_LICENSE_AND_CREDITS);
+	MW_LOG(MW_LOG_WARNING, MW_LOC_SECURITY_WARNING);
+	
+	if(mw_arg_exists(argc, argv, "--risk") == -1){
+		if(!mw_arg_prompt_n(MW_LOC_SECURITY_PROMPT)){
+			printf(MW_LOC_SECURITY_PROMPT_RESPONSE);
+			exit(EXIT_SUCCESS);
+		}
+	}
 
 	MW_LOG(MW_LOG_INFO, "Entering server loop");
 
