@@ -12,6 +12,8 @@
 #include <stdbool.h>
 #include <enet/enet.h>
 
+#include "shared/entity.h"
+
 typedef struct{
 
 	ENetHost 		*enet_client;
@@ -20,5 +22,7 @@ typedef struct{
 
 	int playing_as;
 	bool joined;
+
+	mw_entity_t entities[MW_MAX_ENTITIES];
 
 } mw_client_global;

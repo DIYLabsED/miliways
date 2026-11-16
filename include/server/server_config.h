@@ -12,6 +12,8 @@
 #include <stdbool.h>
 #include <enet/enet.h>
 
+#include "shared/entity.h"
+
 typedef struct{
 
 	ENetHost 		*enet_server;
@@ -23,5 +25,7 @@ typedef struct{
 
 	bool create_new_world;
 	char *world_path;
+
+	mw_entity_t entities[MW_MAX_ENTITIES];
 
 } mw_server_global;
