@@ -7,7 +7,7 @@
 #include "shared/consts.h"
 
 
-void red_world_args(int argc, char **argv){
+void read_world_args(int argc, char **argv){
 
 
 }
