@@ -7,6 +7,11 @@
 #include "shared/consts.h"
 
 
+void red_world_args(int argc, char **argv){
+
+
+}
+
 void read_enet_args(int argc, char **argv){
 
 	if(mw_arg_exists(argc, argv, "--addr") != -1){
@@ -62,6 +67,8 @@ void start_enet_server(){
 void mw_state_setup(int argc, char **argv){
 
 	MW_LOG(MW_LOG_INFO, "Starting server setup");
+
+	read_world_args(argc, argv);
 
 	read_enet_args(argc, argv);
 	start_enet_server();

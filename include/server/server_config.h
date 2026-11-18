@@ -24,6 +24,7 @@ typedef struct{
 	int player_count;
 
 	bool create_new_world;
+	uint64_t world_seed;
 	char *world_path;
 
 	mw_entity_t entities[MW_MAX_ENTITIES];

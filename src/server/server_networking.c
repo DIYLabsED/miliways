@@ -24,7 +24,7 @@ void send_join_result(ENetPeer *peer, mw_join_result res, int character){
 
 	mw_payload_join_result payload = {(uint8_t)(res == MW_JOIN_ACCEPTED), (uint8_t)res, character};
 	mw_packet packet = {{MW_PACKET_JOIN_RESULT, sizeof(payload)}, &payload};
-	mw_send_packet(peer, &packet, ENET_PACKET_FLAG_RELIABLE, 0);
+	mw_send_packet(peer, &packet, ENET_PACKET_FLAG_RELIABLE, MW_ENET_CHAN_RELIABLE);
 	enet_host_flush(g_server_global.enet_server);
 
 }

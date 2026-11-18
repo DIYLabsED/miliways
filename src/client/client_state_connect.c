@@ -35,7 +35,7 @@ void mw_state_connect(int argc, char **argv){
 			mw_payload_join_request request = {g_client_global.playing_as};
 			mw_packet packet = {{MW_PACKET_JOIN_REQUEST, sizeof(request)}, &request};
 
-			if(!mw_send_packet(g_client_global.enet_peer, &packet, ENET_PACKET_FLAG_RELIABLE, 0)){
+			if(!mw_send_packet(g_client_global.enet_peer, &packet, ENET_PACKET_FLAG_RELIABLE, MW_ENET_CHAN_RELIABLE)){
 				g_current_state = mw_state_cleanup;
 				MW_LOG(MW_LOG_ERROR, "Failed to send join request to server");
 				return;
